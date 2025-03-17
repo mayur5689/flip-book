@@ -41,23 +41,23 @@ function App() {
           maxWidth={dimensions.width}
           minHeight={dimensions.height}
           maxHeight={dimensions.height}
-          maxShadowOpacity={0}
+          maxShadowOpacity={0.5}
           showCover={true}
           mobileScrollSupport={true}
           ref={book}
           className="flip-book"
           style={{ margin: '0 auto' }}
           startPage={0}
-          drawShadow={false}
-          flippingTime={0}
+          drawShadow={true}
+          flippingTime={1000}
           usePortrait={false}
           startZIndex={0}
           autoSize={false}
           clickEventForward={false}
-          useMouseEvents={false}
-          swipeDistance={0}
+          useMouseEvents={true}
+          swipeDistance={30}
           showPageCorners={false}
-          disableFlipByClick={true}
+          disableFlipByClick={false}
         >
           <PageCover>BOOK TITLE</PageCover>
           <Page number={1} />
