@@ -66,6 +66,11 @@
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
   background: #fff;
   margin: 0 auto !important;
+  pointer-events: none;
+}
+
+.flip-book .--right {
+  pointer-events: none !important;
 }
 
 .stf__parent {
@@ -77,6 +82,7 @@
   color: #785e3a;
   border: solid 1px #c2b5a3;
   overflow: hidden;
+  pointer-events: none;
 }
 
 .page.--left {
