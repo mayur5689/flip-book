@@ -15,12 +15,65 @@ interface PageFlip {
 
 function App() {
   const book = useRef<PageFlip>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
   const [currentPage, setCurrentPage] = useState(0);
   const totalPages = 38; // Total number of pages including covers
   const [dimensions, setDimensions] = useState({ width: 1150, height: 1610 });
 
+  // Function to get audio file for current page spread
+  const getAudioFile = (page: number) => {
+    // Skip cover page
+    if (page === 0) return null;
+    
+    // Calculate which spread we're on (2 pages per spread)
+    const spread = Math.ceil(page / 2);
+    
+    // We have 6 audio files for now
+    if (spread >= 1 && spread <= 6) {
+      return `/audio/${spread}.mpeg`;
+    }
+    
+    return null;
+  };
+
+  // Handle audio playback and auto-slide
+  useEffect(() => {
+    const audioFile = getAudioFile(currentPage);
+    
+    if (audioFile) {
+      // Create new audio element
+      const audio = new Audio(audioFile);
+      audioRef.current = audio;
+      
+      // Play audio
+      audio.play();
+      
+      // When audio ends, go to next page
+      audio.onended = () => {
+        if (currentPage < totalPages - 1) {
+          nextPage();
+        }
+      };
+    }
+
+    // Cleanup function
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.onended = null;
+        audioRef.current = null;
+      }
+    };
+  }, [currentPage]);
+
   // Add page change handler
   const handlePageChange = (page: number) => {
+    // Stop current audio if playing
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.onended = null;
+    }
+    
     setCurrentPage(page);
     if (book.current) {
       book.current.pageFlip().flip(page);
@@ -28,6 +81,12 @@ function App() {
   };
 
   const nextPage = () => {
+    // Stop current audio if playing
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.onended = null;
+    }
+
     if (currentPage === totalPages - 1) {
       // If we're on the last page, go back to the front cover (page 0)
       setCurrentPage(0);
@@ -45,6 +104,12 @@ function App() {
   };
 
   const prevPage = () => {
+    // Stop current audio if playing
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.onended = null;
+    }
+
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
       if (book.current) {
