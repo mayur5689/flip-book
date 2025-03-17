@@ -6,12 +6,12 @@ import './App.css';
 
 function App() {
   const book = useRef<typeof HTMLFlipBook>(null);
-  const [dimensions, setDimensions] = useState({ width: 500, height: 700 });
+  const [dimensions, setDimensions] = useState({ width: 1150, height: 1610 });
 
   useEffect(() => {
     const updateDimensions = () => {
-      const width = Math.min(window.innerWidth * 0.2, 250);
-      const height = Math.min(window.innerHeight * 0.4, 350);
+      const width = Math.min(window.innerWidth * 0.46, 575);
+      const height = Math.min(window.innerHeight * 0.92, 805);
       setDimensions({ width, height });
     };
 
