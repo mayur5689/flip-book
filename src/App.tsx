@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import HTMLFlipBook from 'react-pageflip';
 import Page from './components/Page';
 import PageCover from './components/PageCover';
