@@ -45,15 +45,29 @@
   width: 100%;
   height: 100vh;
   display: flex;
-  align-items: center;
   justify-content: center;
-  background: #f0f0f0;
-  padding: 20px;
-  box-sizing: border-box;
-  overflow: auto;
+  align-items: center;
+  background-image: url('/image/bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+.container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* This creates the dark overlay */
+  z-index: 0;
 }
 
 .book-container {
+  position: relative;
+  z-index: 1; /* This ensures the book appears above the dark overlay */
   display: flex;
   justify-content: center;
   align-items: center;

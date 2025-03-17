@@ -60,10 +60,9 @@ function App() {
           disableFlipByClick={false}
         >
           <PageCover>BOOK TITLE</PageCover>
-          <Page number={1} />
-          <Page number={2} />
-          <Page number={3} />
-          <Page number={4} />
+          {Array.from({ length: 36 }, (_, i) => (
+            <Page key={i + 1} number={i + 1} />
+          ))}
           <PageCover>THE END</PageCover>
         </HTMLFlipBook>
       </div>
