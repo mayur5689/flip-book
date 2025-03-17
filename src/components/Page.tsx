@@ -6,15 +6,10 @@ interface PageProps {
 
 const Page: React.FC<PageProps> = React.forwardRef<HTMLDivElement, PageProps>((props, ref) => {
   const getImagePath = (pageNumber: number) => {
-    if (pageNumber <= 2) {
-      return `/image/page${pageNumber}.jpg`;
-    } else {
-      // Calculate the divided folder image number
-      // For page 3 we want 2.1.jpg, for page 4 we want 2.2.jpg, etc.
-      const dividedNumber = Math.floor((pageNumber + 1) / 2);
-      const isSecondImage = pageNumber % 2 === 0;
-      return `/divided/${Math.floor(dividedNumber - 0.5)}.${isSecondImage ? '2' : '1'}.jpg`;
-    }
+    // Calculate the image number and whether it's first or second page
+    const imageNumber = Math.ceil(pageNumber / 2);
+    const isSecondImage = pageNumber % 2 === 0;
+    return `/1.1/${imageNumber}.${isSecondImage ? '2' : '1'}.jpg`;
   };
 
   return (
