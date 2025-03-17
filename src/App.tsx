@@ -42,7 +42,7 @@ function App() {
           minHeight={dimensions.height}
           maxHeight={dimensions.height}
           maxShadowOpacity={0.5}
-          showCover={true}
+          showCover={false}
           mobileScrollSupport={true}
           ref={book}
           className="flip-book"
@@ -59,7 +59,17 @@ function App() {
           showPageCorners={false}
           disableFlipByClick={false}
         >
-          <PageCover type="front"></PageCover>
+          <div className="page page-cover-top" data-density="hard">
+            <img 
+              src="/image/back00.jpg"
+              alt="Front Cover"
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover'
+              }}
+            />
+          </div>
           {Array.from({ length: 36 }, (_, i) => (
             <Page key={i + 1} number={i + 1} />
           ))}
