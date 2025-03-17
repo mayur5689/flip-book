@@ -2,7 +2,6 @@ import { useRef, useEffect, useState } from 'react';
 import HTMLFlipBook from 'react-pageflip';
 import Page from './components/Page';
 import PageCover from './components/PageCover';
-import LastPage from './components/LastPage';
 import './App.css';
 
 function App() {
@@ -61,12 +60,10 @@ function App() {
           disableFlipByClick={false}
         >
           <PageCover type="front"></PageCover>
-          {Array.from({ length: 34 }, (_, i) => (
+          {Array.from({ length: 36 }, (_, i) => (
             <Page key={i + 1} number={i + 1} />
           ))}
-          <LastPage number={35} />
-          <LastPage number={36} />
-          <PageCover type="back"></PageCover>
+          <PageCover type="back">THE END</PageCover>
         </HTMLFlipBook>
       </div>
     </div>

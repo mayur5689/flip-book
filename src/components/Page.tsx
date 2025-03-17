@@ -13,8 +13,25 @@ const Page: React.FC<PageProps> = React.forwardRef<HTMLDivElement, PageProps>((p
   };
 
   return (
-    <div className="page" ref={ref} style={{ position: 'relative', overflow: 'hidden', backgroundColor: '#fff' }}>
-      <div className="page-content" style={{ padding: 0, height: '100%', display: 'flex', alignItems: 'center', position: 'relative' }}>
+    <div className="page" ref={ref} style={{ 
+      position: 'relative', 
+      overflow: 'hidden', // Prevent scroll
+      backgroundColor: '#fff',
+      height: '100%',
+      maxHeight: '100%', // Ensure it doesn't exceed container
+      display: 'flex',
+      flexDirection: 'column'
+    }}>
+      <div className="page-content" style={{ 
+        padding: 0, 
+        height: '100%',
+        maxHeight: '100%', // Ensure content doesn't exceed
+        display: 'flex', 
+        alignItems: 'center', 
+        position: 'relative',
+        overflow: 'hidden', // Prevent scroll
+        flexGrow: 1
+      }}>
         <img 
           src={getImagePath(props.number)}
           alt={`Page ${props.number} content`}
@@ -22,7 +39,8 @@ const Page: React.FC<PageProps> = React.forwardRef<HTMLDivElement, PageProps>((p
             width: '100%',
             height: '100%',
             objectFit: 'contain',
-            display: 'block'
+            display: 'block',
+            userSelect: 'none' // Prevent text selection which can cause scroll
           }}
         />
       </div>

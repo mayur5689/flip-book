@@ -1,8 +1,20 @@
+/* Prevent whole page scrolling */
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
+
 #root {
   width: 100%;
   height: 100vh;
   margin: 0;
   padding: 0;
+  overflow: hidden;
+  position: fixed;
 }
 
 .logo {
@@ -44,6 +56,10 @@
 .container {
   width: 100%;
   height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  position: fixed;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -51,7 +67,6 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  position: relative;
 }
 
 .container::before {
@@ -66,20 +81,22 @@
 }
 
 .book-container {
-  position: relative;
-  z-index: 1; /* This ensures the book appears above the dark overlay */
+  position: fixed;
+  z-index: 1;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-  min-height: 100vh;
-  padding: 40px 20px;
+  height: 100vh;
+  padding: 0;
+  overflow: hidden;
 }
 
 .flip-book {
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
   background: #fff;
   margin: 0 auto !important;
+  overflow: hidden !important;
 }
 
 .flip-book .--right {
@@ -94,7 +111,10 @@
   background-color: #fafafa;
   color: #785e3a;
   border: solid 1px #c2b5a3;
-  overflow: hidden;
+  overflow: hidden !important;
+  position: relative;
+  height: 100%;
+  touch-action: none;
 }
 
 .page.--left {
@@ -114,8 +134,10 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: stretch;
-  padding: 30px;
+  padding: 0; /* Remove padding */
   box-sizing: border-box;
+  overflow: hidden !important; /* Force no scroll */
+  touch-action: none; /* Prevent touch scrolling */
 }
 
 .page-header {
@@ -172,23 +194,4 @@
 .page.page-cover .page-content {
   background-color: rgba(255, 255, 255, 0.5);
   height: 100%;
-}
-
-.page-cover-top {
-  background-color: transparent;
-  border: solid 1px #998466;
-  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.2);
-  position: relative;
-  overflow: hidden;
-}
-
-.page-cover-top::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 3px;
-  background: rgba(0, 0, 0, 0.1);
-  box-shadow: -1px 0 3px rgba(0, 0, 0, 0.1);
 }
