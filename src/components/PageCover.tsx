@@ -20,10 +20,11 @@ const PageCover: React.FC<PageCoverProps> = React.forwardRef<HTMLDivElement, Pag
         style={{
           width: '100%',
           height: '100%',
-          objectFit: 'cover',
+          objectFit: 'contain',
           position: 'absolute',
           top: 0,
-          left: 0
+          left: 0,
+          padding: '20px'
         }}
       />
       <div className="page-content" style={{ position: 'relative', zIndex: 1, backgroundColor: 'transparent' }}>
