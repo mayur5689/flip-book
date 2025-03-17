@@ -8,22 +8,24 @@ const Page: React.FC<PageProps> = React.forwardRef<HTMLDivElement, PageProps>((p
   // For pages 1 and 2, display the corresponding images
   if (props.number === 1 || props.number === 2) {
     return (
-      <div className="page" ref={ref} style={{ position: 'relative', overflow: 'hidden' }}>
-        <div className="page-content" style={{ padding: 0, height: '100%' }}>
+      <div className="page" ref={ref} style={{ position: 'relative', overflow: 'hidden', backgroundColor: '#fff' }}>
+        <div className="page-content" style={{ padding: 0, height: '100%', display: 'flex', alignItems: 'center' }}>
           <div style={{ 
             width: '100%',
             height: '100%',
             display: 'flex',
             justifyContent: 'center',
-            alignItems: 'center'
+            alignItems: 'center',
+            padding: '0'
           }}>
             <img 
               src={`/image/page${props.number}.jpg`}
               alt={`Page ${props.number} content`}
               style={{ 
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover'
+                maxWidth: '100%',
+                maxHeight: '100%',
+                objectFit: 'contain',
+                display: 'block'
               }}
             />
           </div>

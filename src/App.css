@@ -43,12 +43,12 @@
 
 .container {
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   background: #f0f0f0;
-  padding: 20px;
+  padding: 40px;
   box-sizing: border-box;
   overflow: auto;
 }
@@ -59,7 +59,7 @@
   align-items: center;
   width: 100%;
   min-height: 100vh;
-  padding: 40px 20px;
+  padding: 20px;
 }
 
 .flip-book {
