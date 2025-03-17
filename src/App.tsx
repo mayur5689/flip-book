@@ -2,6 +2,7 @@ import { useRef, useEffect, useState } from 'react';
 import HTMLFlipBook from 'react-pageflip';
 import Page from './components/Page';
 import PageCover from './components/PageCover';
+import LastPage from './components/LastPage';
 import './App.css';
 
 function App() {
@@ -42,7 +43,7 @@ function App() {
           minHeight={dimensions.height}
           maxHeight={dimensions.height}
           maxShadowOpacity={0.5}
-          showCover={false}
+          showCover={true}
           mobileScrollSupport={true}
           ref={book}
           className="flip-book"
@@ -59,21 +60,13 @@ function App() {
           showPageCorners={false}
           disableFlipByClick={false}
         >
-          <div className="page page-cover-top" data-density="hard">
-            <img 
-              src="/image/back00.jpg"
-              alt="Front Cover"
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover'
-              }}
-            />
-          </div>
-          {Array.from({ length: 36 }, (_, i) => (
+          <PageCover type="front"></PageCover>
+          {Array.from({ length: 34 }, (_, i) => (
             <Page key={i + 1} number={i + 1} />
           ))}
-          <PageCover type="back">THE END</PageCover>
+          <LastPage number={35} />
+          <LastPage number={36} />
+          <PageCover type="back"></PageCover>
         </HTMLFlipBook>
       </div>
     </div>
