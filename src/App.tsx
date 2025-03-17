@@ -53,10 +53,10 @@ function App() {
           usePortrait={false}
           startZIndex={0}
           autoSize={false}
-          clickEventForward={true}
+          clickEventForward={false}
           useMouseEvents={true}
-          swipeDistance={0}
-          showPageCorners={true}
+          swipeDistance={30}
+          showPageCorners={false}
           disableFlipByClick={false}
         >
           <PageCover>BOOK TITLE</PageCover>
