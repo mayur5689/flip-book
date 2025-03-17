@@ -76,7 +76,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5); /* This creates the dark overlay */
+  background-color: rgba(0, 0, 0, 0.7); /* Changed from 0.5 to 0.7 for darker overlay */
   z-index: 0;
 }
 
@@ -194,4 +194,78 @@ body {
 .page.page-cover .page-content {
   background-color: rgba(255, 255, 255, 0.5);
   height: 100%;
+}
+
+.carousel-indicators {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 2;
+}
+
+.carousel-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.5);
+  border: 2px solid white;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.3s ease;
+}
+
+.carousel-dot.active {
+  background-color: white;
+}
+
+.carousel-dot:hover {
+  transform: scale(1.2);
+}
+
+.nav-button {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  transition: all 0.3s ease;
+  z-index: 2;
+  padding: 0;
+  outline: none;
+}
+
+.nav-button:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.nav-button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  transform: translateY(-50%) scale(1);
+}
+
+.nav-button i {
+  font-size: 24px;
+  color: white;
+  line-height: 1;
+}
+
+.prev-button {
+  left: 30px;
+}
+
+.next-button {
+  right: 30px;
 }

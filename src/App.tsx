@@ -4,9 +4,54 @@ import Page from './components/Page';
 import PageCover from './components/PageCover';
 import './App.css';
 
+interface PageFlip {
+  pageFlip: () => {
+    flip: (page: number) => void;
+    flipNext: () => void;
+    flipPrev: () => void;
+    turnToPage: (page: number) => void;
+  };
+}
+
 function App() {
-  const book = useRef<typeof HTMLFlipBook>(null);
+  const book = useRef<PageFlip>(null);
+  const [currentPage, setCurrentPage] = useState(0);
+  const totalPages = 38; // Total number of pages including covers
   const [dimensions, setDimensions] = useState({ width: 1150, height: 1610 });
+
+  // Add page change handler
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    if (book.current) {
+      book.current.pageFlip().flip(page);
+    }
+  };
+
+  const nextPage = () => {
+    if (currentPage === totalPages - 1) {
+      // If we're on the last page, go back to the front cover (page 0)
+      setCurrentPage(0);
+      if (book.current) {
+        // Force flip to the first page (front cover)
+        book.current.pageFlip().turnToPage(0);
+      }
+    } else if (currentPage < totalPages - 1) {
+      // Normal next page behavior
+      setCurrentPage(currentPage + 1);
+      if (book.current) {
+        book.current.pageFlip().flipNext();
+      }
+    }
+  };
+
+  const prevPage = () => {
+    if (currentPage > 0) {
+      setCurrentPage(currentPage - 1);
+      if (book.current) {
+        book.current.pageFlip().flipPrev();
+      }
+    }
+  };
 
   useEffect(() => {
     const updateDimensions = () => {
@@ -33,6 +78,16 @@ function App() {
   return (
     <div className="container">
       <div className="book-container">
+        {/* Previous Button */}
+        <button 
+          className="nav-button prev-button" 
+          onClick={prevPage}
+          disabled={currentPage === 0}
+          aria-label="Previous page"
+        >
+          <i className="fas fa-chevron-left"></i>
+        </button>
+
         <HTMLFlipBook
           width={dimensions.width}
           height={dimensions.height}
@@ -58,13 +113,51 @@ function App() {
           swipeDistance={30}
           showPageCorners={false}
           disableFlipByClick={false}
+          onFlip={(e) => setCurrentPage(e.data)}
         >
           <PageCover type="front"></PageCover>
           {Array.from({ length: 36 }, (_, i) => (
             <Page key={i + 1} number={i + 1} />
           ))}
-          <PageCover type="back">THE END</PageCover>
+          <div className="page hard">
+            <div className="page-content" style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '100%'
+            }}>
+              <h2 style={{
+                fontSize: '3rem',
+                color: '#4a3f35',
+                textTransform: 'uppercase',
+                letterSpacing: '2px',
+                textShadow: '2px 2px 4px rgba(0,0,0,0.2)'
+              }}>THE END</h2>
+            </div>
+          </div>
+          <PageCover type="back"></PageCover>
         </HTMLFlipBook>
+
+        {/* Next Button */}
+        <button 
+          className="nav-button next-button" 
+          onClick={nextPage}
+          aria-label="Next page"
+        >
+          <i className="fas fa-chevron-right"></i>
+        </button>
+
+        {/* Carousel Indicators */}
+        <div className="carousel-indicators">
+          {Array.from({ length: totalPages }, (_, i) => (
+            <button
+              key={i}
+              className={`carousel-dot ${currentPage === i ? 'active' : ''}`}
+              onClick={() => handlePageChange(i)}
+              aria-label={`Go to page ${i + 1}`}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
