@@ -59,7 +59,7 @@ function App() {
           showPageCorners={false}
           disableFlipByClick={false}
         >
-          <PageCover type="front">BOOK TITLE</PageCover>
+          <PageCover type="front"></PageCover>
           {Array.from({ length: 36 }, (_, i) => (
             <Page key={i + 1} number={i + 1} />
           ))}

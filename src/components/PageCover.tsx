@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface PageCoverProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   type?: 'front' | 'back';
 }
 
