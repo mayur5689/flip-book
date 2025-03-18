@@ -285,7 +285,7 @@ body {
   /* Adjust navigation buttons */
   .nav-button {
     position: fixed;
-    top: 64%;
+    top: 65%;
     width: 35px;
     height: 35px;
     transform: none !important;
