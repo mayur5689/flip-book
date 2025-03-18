@@ -278,14 +278,14 @@ body {
     height: 200vh !important;
     width: 200% !important;
     position: absolute;
-    top: -45%;
+    top: -55%;
     left: -50%;
   }
 
   /* Adjust navigation buttons */
   .nav-button {
     position: fixed;
-    top: 65%;
+    top: 64%;
     width: 35px;
     height: 35px;
     transform: none !important;
