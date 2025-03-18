@@ -197,13 +197,7 @@ body {
 }
 
 .carousel-indicators {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 8px;
-  z-index: 2;
+  display: none;
 }
 
 .carousel-dot {
@@ -304,8 +298,90 @@ body {
     right: 36%;
   }
 
+  /* Fix audio control for mobile */
+  .audio-control {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    transform: none !important;
+    z-index: 99999;
+    background-color: rgba(0, 0, 0, 0.3); /* Darker background for better visibility */
+  }
+
+  .audio-control i {
+    font-size: 24px;
+    color: white;
+  }
+
   /* Hide carousel dots */
   .carousel-indicators {
     display: none;
+  }
+}
+
+/* Base audio control styles */
+.audio-control {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.2); /* Lighter background from 0.5 to 0.2 */
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  transition: all 0.3s ease;
+  z-index: 999999;
+  padding: 0;
+  outline: none;
+  pointer-events: auto;
+}
+
+.audio-control i {
+  font-size: 22px;
+  color: white;
+  pointer-events: none;
+}
+
+/* Remove hover transform to prevent issues */
+.audio-control:hover {
+  background-color: rgba(0, 0, 0, 0.3); /* Lighter hover state from 0.7 to 0.3 */
+}
+
+/* Single mobile media query */
+@media screen and (max-width: 1024px) {
+  .audio-control {
+    width: 50px;
+    height: 50px;
+    top: 20px;
+    right: 20px;
+    transform: none !important;
+    background-color: rgba(0, 0, 0, 0.2); /* Match the lighter background */
+  }
+
+  .audio-control:hover {
+    background-color: rgba(0, 0, 0, 0.3); /* Match the lighter hover state */
+  }
+
+  .audio-control i {
+    font-size: 24px;
+  }
+}
+
+/* Small mobile adjustments */
+@media screen and (max-width: 480px) {
+  .audio-control {
+    width: 45px;
+    height: 45px;
+  }
+
+  .audio-control i {
+    font-size: 22px;
   }
 }
