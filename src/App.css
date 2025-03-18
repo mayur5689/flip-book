@@ -286,8 +286,8 @@ body {
   .nav-button {
     position: fixed;
     top: 65%;
-    width: 35px;
-    height: 35px;
+    width: 80px;
+    height: 80px;
     transform: none !important;
   }
 
@@ -297,11 +297,11 @@ body {
   }
 
   .prev-button {
-    left: 43%;
+    left: 38%;
   }
 
   .next-button {
-    right: 43%;
+    right: 38%;
   }
 
   /* Hide carousel dots */
