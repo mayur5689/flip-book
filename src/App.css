@@ -269,3 +269,43 @@ body {
 .next-button {
   right: 30px;
 }
+
+/* Mobile-specific styles */
+@media screen and (max-width: 768px) {
+  .book-container {
+    transform: scale(0.65);
+    transform-origin: center center;
+    height: 200vh !important;
+    width: 200% !important;
+    position: absolute;
+    top: -45%;
+    left: -50%;
+  }
+
+  /* Adjust navigation buttons */
+  .nav-button {
+    position: fixed;
+    top: 65%;
+    width: 35px;
+    height: 35px;
+    transform: none !important;
+  }
+
+  .nav-button:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: none !important;
+  }
+
+  .prev-button {
+    left: 43%;
+  }
+
+  .next-button {
+    right: 43%;
+  }
+
+  /* Hide carousel dots */
+  .carousel-indicators {
+    display: none;
+  }
+}
