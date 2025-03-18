@@ -19,18 +19,23 @@ function App() {
   const [currentPage, setCurrentPage] = useState(0);
   const totalPages = 38; // Total number of pages including covers
   const [dimensions, setDimensions] = useState({ width: 1150, height: 1610 });
+  const [isAudioMuted, setIsAudioMuted] = useState(false);
 
   // Function to get audio file for current page spread
   const getAudioFile = (page: number) => {
-    // Skip cover page
-    if (page === 0) return null;
+    // Skip cover pages (first and last)
+    if (page === 0 || page === totalPages - 1) return null;
     
     // Calculate which spread we're on (2 pages per spread)
-    const spread = Math.ceil(page / 2);
+    // We don't need to adjust page number since we want audio 1 to play on pages 1-2
+    const audioNumber = Math.ceil((page) / 2);
     
-    // We have 6 audio files for now
-    if (spread >= 1 && spread <= 6) {
-      return `/audio/${spread}.mpeg`;
+    // Debug log to see the mapping
+    console.log('Page:', page, 'Audio number:', audioNumber);
+    
+    // We have 18 audio files
+    if (audioNumber >= 1 && audioNumber <= 18) {
+      return `/audios/${audioNumber}.mp3`;
     }
     
     return null;
@@ -39,19 +44,36 @@ function App() {
   // Handle audio playback and auto-slide
   useEffect(() => {
     const audioFile = getAudioFile(currentPage);
+    console.log('Current page:', currentPage, 'Audio file:', audioFile);
     
-    if (audioFile) {
+    if (audioFile && !isAudioMuted) {
       // Create new audio element
       const audio = new Audio(audioFile);
       audioRef.current = audio;
       
-      // Play audio
-      audio.play();
+      // Set audio properties
+      audio.preload = 'auto';
       
-      // When audio ends, go to next page
+      // Play audio with error handling
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            console.log('Audio playing successfully:', audioFile);
+          })
+          .catch(error => {
+            console.error("Audio play failed:", error);
+          });
+      }
+      
+      // When audio ends, automatically go to next page
       audio.onended = () => {
+        console.log('Audio ended, auto-advancing to next page');
         if (currentPage < totalPages - 1) {
-          nextPage();
+          // Add a small delay before turning the page
+          setTimeout(() => {
+            nextPage();
+          }, 500); // 500ms delay for smooth transition
         }
       };
     }
@@ -64,7 +86,7 @@ function App() {
         audioRef.current = null;
       }
     };
-  }, [currentPage]);
+  }, [currentPage, isAudioMuted]);
 
   // Add page change handler
   const handlePageChange = (page: number) => {
@@ -85,13 +107,13 @@ function App() {
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.onended = null;
+      audioRef.current = null;
     }
 
     if (currentPage === totalPages - 1) {
       // If we're on the last page, go back to the front cover (page 0)
       setCurrentPage(0);
       if (book.current) {
-        // Force flip to the first page (front cover)
         book.current.pageFlip().turnToPage(0);
       }
     } else if (currentPage < totalPages - 1) {
@@ -114,6 +136,28 @@ function App() {
       setCurrentPage(currentPage - 1);
       if (book.current) {
         book.current.pageFlip().flipPrev();
+      }
+    }
+  };
+
+  const toggleAudio = () => {
+    setIsAudioMuted(!isAudioMuted);
+    
+    if (audioRef.current) {
+      if (isAudioMuted) {
+        // If currently muted, unmuting - start playing current page's audio
+        const audioFile = getAudioFile(currentPage);
+        if (audioFile) {
+          const audio = new Audio(audioFile);
+          audioRef.current = audio;
+          audio.play().catch(error => {
+            console.error("Audio play failed on unmute:", error);
+          });
+        }
+      } else {
+        // If currently playing, muting - stop audio
+        audioRef.current.pause();
+        audioRef.current = null;
       }
     }
   };
@@ -142,6 +186,15 @@ function App() {
 
   return (
     <div className="container">
+      {/* Move audio control outside book container */}
+      <button 
+        className="audio-control" 
+        onClick={toggleAudio}
+        aria-label={isAudioMuted ? "Unmute audio" : "Mute audio"}
+      >
+        <i className={`fa-solid ${isAudioMuted ? 'fa-volume-xmark' : 'fa-volume-high'}`}></i>
+      </button>
+
       <div className="book-container">
         {/* Previous Button */}
         <button 
