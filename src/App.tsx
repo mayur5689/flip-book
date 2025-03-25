@@ -44,41 +44,31 @@ function App() {
   // Handle audio playback and auto-slide
   useEffect(() => {
     const audioFile = getAudioFile(currentPage);
-    console.log('Current page:', currentPage, 'Audio file:', audioFile);
     
     if (audioFile && !isAudioMuted) {
-      // Create new audio element
+      // Create new audio element with preload
       const audio = new Audio(audioFile);
+      audio.preload = 'auto';
       audioRef.current = audio;
       
-      // Set audio properties
-      audio.preload = 'auto';
-      
-      // Play audio with error handling
-      const playPromise = audio.play();
-      if (playPromise !== undefined) {
-        playPromise
-          .then(() => {
-            console.log('Audio playing successfully:', audioFile);
-          })
-          .catch(error => {
-            console.error("Audio play failed:", error);
-          });
-      }
-      
-      // When audio ends, automatically go to next page
+      // When audio ends, immediately flip to next page
       audio.onended = () => {
-        console.log('Audio ended, auto-advancing to next page');
         if (currentPage < totalPages - 1) {
-          // Add a small delay before turning the page
-          setTimeout(() => {
-            nextPage();
-          }, 500); // 500ms delay for smooth transition
+          // Immediate page turn without delay
+          if (book.current) {
+            setCurrentPage(currentPage + 1);
+            book.current.pageFlip().flipNext();
+          }
         }
       };
+
+      // Play audio immediately
+      audio.play().catch(error => {
+        console.error("Audio play failed:", error);
+      });
     }
 
-    // Cleanup function
+    // Cleanup function - important for preventing memory leaks
     return () => {
       if (audioRef.current) {
         audioRef.current.pause();
@@ -102,8 +92,9 @@ function App() {
     }
   };
 
+  // Optimize page turning
   const nextPage = () => {
-    // Stop current audio if playing
+    // Immediately stop current audio
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.onended = null;
@@ -111,13 +102,11 @@ function App() {
     }
 
     if (currentPage === totalPages - 1) {
-      // If we're on the last page, go back to the front cover (page 0)
       setCurrentPage(0);
       if (book.current) {
         book.current.pageFlip().turnToPage(0);
       }
     } else if (currentPage < totalPages - 1) {
-      // Normal next page behavior
       setCurrentPage(currentPage + 1);
       if (book.current) {
         book.current.pageFlip().flipNext();
@@ -222,7 +211,7 @@ function App() {
           style={{ margin: '0 auto' }}
           startPage={0}
           drawShadow={true}
-          flippingTime={1000}
+          flippingTime={600}
           usePortrait={false}
           startZIndex={0}
           autoSize={false}
